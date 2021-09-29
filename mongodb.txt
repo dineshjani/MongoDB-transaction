@@ -1,0 +1,32 @@
+pip install pymongo
+python manager.py shell
+>>> from pymongo import MongoClient
+>>> client = MongoClient()
+>>> client = MongoClient('localhost', 27017)
+>>> db = client.test_database
+>>> posts = db.posts
+>>> import datetime
+>>> post = {"author": "Mike",                 
+...  "tags": ["mongodb", "python", "pymongo"],
+... "date": datetime.datetime.utcnow()}
+
+>>> post_id = posts.insert_one(post).inserted_id
+>>> post_id
+
+
+
+
+>>> from blog.Models import db    
+                                                        >>> u=db.MongoManager.getInstance()
+u=db.MongoManager.getInstance("localhost",27017)
+>>> u
+MongoClient(host=['localhost:27017'], document_class=dict, tz_aware=False, connect=True)
+
+>>> db = u.name_of__database  
+>>> posts = db.name_of_collection
+>>> documents={"author": "jani","title":"pymongo","des":"or bhai"} 
+>>> post_id=posts.insert_one(documents).inserted_id 
+>>> post_id
+ObjectId('60fbc90a79be54bc64227c42')
+
+ u=db.MongoManager.getInstance("localhost",27017)

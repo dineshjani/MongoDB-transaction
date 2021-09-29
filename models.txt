@@ -1,0 +1,397 @@
+
+C:\Users\djani\Documents>mkdir my_awesome
+
+C:\Users\djani\Documents>cd my_awesome
+
+C:\Users\djani\Documents\my_awesome>pip install virtualenv
+
+C:\Users\djani\Documents\my_awesome>python -m virtualenv envagain
+
+
+C:\Users\djani\Documents\my_awesome>envagain\scripts\activate
+
+(envagain) C:\Users\djani\Documents\my_awesome>pip install django
+
+
+(envagain) C:\Users\djani\Documents\my_awesome>django-admin startproject my_first_project .
+
+(envagain) C:\Users\djani\Documents\my_awesome>code .
+
+(envagain) C:\Users\djani\Documents\my_awesome>python manage.py runserver
+.
+
+
+(envagain) C:\Users\djani\Documents\my_awesome>python manage.py startapp helloworld
+
+
+
+PS C:\Users\djani\Documents\my_awesome> python manage.py makemigrations
+
+PS C:\Users\djani\Documents\my_awesome> python manage.py migrate
+
+PS C:\Users\djani\Documents\my_awesome> python manage.py createsuperuser
+
+PS C:\Users\djani\Documents\my_awesome> python manage.py runserver
+
+
+
+   
+
+PS C:\Users\djani\Documents\my_awesome> python manage.py makemigrations
+
+PS C:\Users\djani\Documents\my_awesome> python manage.py migrate        
+
+
+
+
+
+PS C:\Users\djani\Documents\my_awesome> python manage.py shell
+
+>>> from helloworld import models                                  //import model
+>>> models.Student.objects
+<django.db.models.manager.Manager object at 0x00000204A5DBE610>
+>>> models.Student.objects.all()
+<QuerySet [<Student: ravi>]>
+
+
+>>> models.Student.objects.get(id=1)        
+<Student: ravi>
+>>> dinesh=models.Student.objects.get(id=1)
+>>> dinesh
+<Student: ravi>
+
+>>> dinesh.age
+12
+>>> dinesh.roll_number
+'123'
+>>> dinesh.department_set
+<django.db.models.fields.related_descriptors.create_reverse_many_to_one_manager.<locals>.RelatedManager object at 0x00000204A5DBE670>
+>>> dinesh.department_set.all()
+<QuerySet [<Department: Cs>]>
+>>> dinesh.marks_set.all()
+<QuerySet [<Marks: 1>]>
+>>> dinesh.department_set.all()
+<QuerySet [<Department: Cs>, <Department: coe>]>
+>>> dinesh.marks_set.all()      
+<QuerySet [<Marks: 1>, <Marks: 2>]>
+
+
+python manage.py migrate --run-syncdb
+
+
+
+
+
+
+
+
+
+PS C:\Users\djani\Documents\my_awesome> python manage.py startapp secondtry
+PS C:\Users\djani\Documents\my_awesome> python manage.py makemigrations
+PS C:\Users\djani\Documents\my_awesome> python manage.py makemigrations
+Migrations for 'secondtry':
+  secondtry\migrations\0001_initial.py
+    - Create model Department
+    - Create model Marks
+PS C:\Users\djani\Documents\my_awesome> python manage.py migrate
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, secondtry, sessions
+Running migrations:
+  Applying secondtry.0001_initial... OK
+PS C:\Users\djani\Documents\my_awesome> python manage.py runserver
+Watching for file changes with StatReloader
+Performing system checks...
+
+System check identified no issues (0 silenced).
+July 21, 2021 - 12:45:22
+Django version 3.2.5, using settings 'my_first_project.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CTRL-BREAK.
+C:\Users\djani\Documents\my_awesome\secondtry\models.py changed, reloading.
+Watching for file changes with StatReloader
+
+System check identified no issues (0 silenced).
+July 21, 2021 - 12:48:10
+Django version 3.2.5, using settings 'my_first_project.settings'
+Quit the server with CTRL-BREAK.
+PS C:\Users\djani\Documents\my_awesome> python manage.py makemigrations
+Migrations for 'secondtry':
+  secondtry\migrations\0002_auto_20210721_1248.py
+    - Alter field gender on student
+PS C:\Users\djani\Documents\my_awesome> python manage.py migrate       
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, secondtry, sessions
+Running migrations:
+  Applying secondtry.0002_auto_20210721_1248... OK
+PS C:\Users\djani\Documents\my_awesome> python manage.py runserver     
+Watching for file changes with StatReloader
+
+System check identified no issues (0 silenced).
+July 21, 2021 - 12:48:33
+Django version 3.2.5, using settings 'my_first_project.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CTRL-BREAK.
+PS C:\Users\djani\Documents\my_awesome> python manage.py shell
+Python 3.9.6 (tags/v3.9.6:db3ff76, Jun 28 2021, 15:26:21) [MSC v.1929 64 bit (AMD64)] 
+on win32
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+
+>>> from secondtry import models  
+>>> dinesh=models.Department.objects.get(id=1)        
+>>> dinesh
+<Department: Cs>
+>>> dinesh.student_set.all()    
+<QuerySet [<Student: 123>, <Student: 190>]>
+
+>>> d=models.Department(branch="electric")
+>>> d.save()                                                                 //insert through manual     delete also a.delete()
+>>> jani=models.Department.objects.all()
+>>> jani 
+<QuerySet [<Department: Cs>, <Department: coe>, <Department: electronics>, <Department
+>>> jani=models.Student.objects.all()                                                                       //all student data
+>>> jani
+<QuerySet [<Student: 123>, <Student: 12345>, <Student: 190>, <Student: 10170>]>
+
+jisma foreign usko chance hoga choose karne ka yha student ke department ma foreign key ha to yha department ko choose krne ke awsar milenge.
+jab department ka object bnaienge usma sab student aa jaienge
+
+
+>>> jani=models.Student.objects.all()                                                       //when remove rerturn self.roll_no
+>>> jani
+<QuerySet [<Student: Student object (1)>, <Student: Student                                 //through department access student
+object (2)>, <Student: Student object (3)>, <Student: Studenobject (2)>, <Studet object (4)>]>
+
+
+>>> for st in jani: print(st.name)
+dinesh
+ravi
+hanuman
+kalpna
+
+
+
+>>> bhai=models.Student.objects.get(id=1)                                                              //particular id data
+>>> bhai                                                                                      //through student accessing marks
+<Student: 123>
+>>> bhai.marks_set.all()
+<QuerySet [<Marks: Marks object (1)>]>
+>>> for marks in bhai.marks_set.all(): print(marks)
+... 
+Marks object (1)
+>>> for marks in bhai.marks_set.all(): print(marks.math_marks) 
+... 
+88
+
+
+
+>>> youare=models.Department.objects.get(id=1) 
+>>> youare
+<Department: Cs>
+>>> youare.faculty_set.all()
+<QuerySet [<Faculty: Faculty object (1)>, <Faculty: Faculty object (3)>]>
+>>> for i in youare.faculty_set.all(): print(i.name)
+...
+rajendra sharma
+Varun Sir
+
+
+>>> cs=models.Department.objects.get(id=1)
+>>> cs
+<Department: Cs>
+
+lalita=models.Faculty(name='lalita')                              
+>>> lalita.save()
+>>> lalita.department.add(cs)    or lalita.department.set(cs or list of dept)        //in many to many we have to add this way
+                        // filter
+
+lalita=models.Faculty.objects.create(title="x" content="y")                 //here do not need to save darect
+                   
+
+>>> for i in youare.faculty_set.all(): print(i.name)
+... 
+rajendra sharma
+Varun Sir
+lalita
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+>>> jani=models.Department.objects.get(id=1)
+>>> jani
+<Department: Cs>
+>>> jani.student_set.all()
+<QuerySet [<Student: 123>, <Student: 190>]>
+
+student have foreign key point to departmenttable
+so we can access student 
+
+
+issi trah marks ki foreign key ha jo student ko point karti ha to hum 
+student ke object bnake usma marks_set krke  uss student ke marks ko pta kar skte ha.
+
+
+***Ydi mujhe koi point kar rha ha(foreignkey) to ma usse set (_set)kar skta hu****
+
+
+
+
+>>> from secondtry import models 
+
+>>> iam=models.Faculty.objects.get(id=1) 
+>>> iam 
+<Faculty: Faculty object (1)>
+>>> iam.department_set.all()
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+AttributeError: 'Faculty' object has no attribute 'department_set'
+>>> youare=models.Department.objects.get(id=1) 
+>>> youare
+<Department: Cs>
+
+                                                                                      //  many to many (faculty and dept)
+
+>>> youare.faculty_set.all() 
+<QuerySet [<Faculty: Faculty object (1)>, <Faculty: Faculty object (3)>]>
+>>> for i in youare.faculty_set.all(): print(i.name)
+... 
+rajendra sharma
+Varun Sir
+
+
+
+
+
+>>> models.Student.objects.filter(name="ravi") 
+<QuerySet [<Student: 12345>]>                                                                                     //filtering
+>>> models.Student.objects.filter(age__lte=25) 
+<QuerySet [<Student: Student object (1)>, <Student: Student object (3)>]>
+>>> models.Student.objects.filter(age__gte=20) 
+<QuerySet [<Student: Student object (2)>, <Student: Student object (3)>, <Student: Student object (4)>]>
+>>> models.Student.objects.filter(gender ="m") 
+<QuerySet [<Student: Student object (1)>, <Student: Student object (2)>, <Student: Student object (3)>]>
+>>> models.Student.objects.filter(age__range=(20,25)) 
+<QuerySet [<Student: Student object (3)>]>
+
+
+
+>>> models.Student.objects.all()[0]
+<Student: Student object (1)>
+>>> models.Student.objects.all()[0].name
+
+>>> w=models.Student.objects.all()
+>>> for i in w:print(i.name) 
+... 
+dinesh
+ravi
+hanuman
+kalpna
+
+>>> s=w.order_by('age')      
+>>> for i in s:print(i.age)  
+... 
+12
+24
+28
+68
+>>> s=w.order_by('-age')        
+>>> for i in s:print((i.age))   
+... 
+68
+28
+24
+12
+
+>>> for i in s:for department in i.department.all:print((i.department.branch))  
+... 
+electronics
+electronics
+Cs
+Cs
+
+>>> n=models.Department.objects.filter(branch="Cs")  
+>>> n
+<QuerySet [<Department: Department object (1)>]>
+>>> n[0]               
+<Department: Department object (1)>
+>>> n[0].student_set.all()                                          //remeber when go through filter or loop on n
+<QuerySet [<Student: Student object (1)>, <Student: Student object (3)>]>
+
+
+>>> youare=models.Department.objects.get(id=1) 
+>>> youare.branch
+'Cs'
+>>> youare.Hod_name
+'Mr. Maninder Singh'
+>>> youare.student_set.all()
+<QuerySet [<Student: Student object (1)>, <Student: Student object (3)>]>
+
+
+>>> youare=models.Faculty.objects.get(id=1) 
+>>> youare.name
+'rajendra sharma'
+>>> youare.department.all()                                          //manytomany acess other field from foreign key table
+<QuerySet [<Department: Department object (1)>]>
+>>> for i in  youare.department.all():print(i.branch) 
+... 
+Cs
+>>>
+
+
+>>> d1=models.Department.objects.create(branch="mechanical",Hod_name="sunil garg")
+>>> d1
+<Department: Department object (5)>
+>>> d1.student_set.create(c)
+<Student: Student object (5)>
+>>> d1.student_set.create(name="Naveen",roll_number="347856",gender="M", phone_number="809677889",email="savan@gmail.com", age=24,department=d1,slug="xcv_slug")
+<Student: Student object (6)>
+>>> d1.student_set.all()
+<QuerySet [<Student: Student object (5)>, <Student: Student object (6)>]>
+>>> d1.student_set.count()
+2
+>>> d1.student_set.filter(name="Neha") 
+<QuerySet [<Student: Student object (5)>]>
+>>> models.Student.objects.filter(department="Cs")                          //not througuh branch through objects 
+giving error
+>>> models.Student.objects.filter(department=d1)
+<QuerySet [<Student: Student object (5)>, <Student: Student object (6)>]>
+>>> d2=models.Department.objects.filter(branch="Cs")
+>>> d2
+<QuerySet [<Department: Department object (1)>]>
+>>> models.Student.objects.filter(department=d2[0])                               //because of Queryset fillter return queryset
+<QuerySet [<Student: Student object (1)>, <Student: Student object (3)>]>
+>>> models.Student.objects.filter(department__in=[d1,d2[0]]).distinct()
+<QuerySet [<Student: Student object (1)>, <Student: Student object (3)>, <Student: Student object (5)>, <Student: Student object (6)>]>
+
+>>> models.Student.objects.order_by("name")                                          //orderby
+<QuerySet [<Student: Student object (6)>, <Student: Student object (5)>, <Student: Student object (1)>, <Student: Student object (3)>, <Student: Student object (4)>, <Student: Student object (2)>]>
+
+
+>>> m1=models.Faculty.objects.create(name="parteek bhaiya")
+>>> m1
+<Faculty: Faculty object (6)>
+>>> m1.department.add(d1)                                  // department ka return type object ha  
+>>> m1
+<Faculty: Faculty object (6)>
+oads\paybotus\src\services\paybotus-service>
+
+
+
+
+
+
+
+C:/Users/djani/Downloads/paybotus/src/services/paybotus-service/env/Scripts/activate
+go for that folder then cmd then code .f1 test test*
+
+python -m unittest discover -v -s your_tests_directory -p test_*.py

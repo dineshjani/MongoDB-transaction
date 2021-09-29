@@ -1,0 +1,679 @@
+
+
+
+
+pip install pymongo
+python manager.py shell
+>>> from pymongo import MongoClient
+>>> client = MongoClient()
+>>> client = MongoClient('localhost', 27017)
+>>> db = client.test_database
+>>> posts = db.posts
+>>> import datetime
+>>> post = {"author": "Mike",                 
+...  "tags": ["mongodb", "python", "pymongo"],
+... "date": datetime.datetime.utcnow()}
+
+>>> post_id = posts.insert_one(post).inserted_id
+>>> post_id
+
+
+>>> from blog.Models import db    
+                                                        >>> u=db.MongoManager.getInstance()
+u=db.MongoManager.getInstance("localhost",27017)
+>>> u
+MongoClient(host=['localhost:27017'], document_class=dict, tz_aware=False, connect=True)
+
+>>> db = u.name_of__database  
+>>> posts = db.name_of_collection
+>>> documents={"author": "jani","title":"pymongo","des":"or bhai"} 
+>>> post_id=posts.insert_one(documents).inserted_id 
+>>> post_id
+ObjectId('60fbc90a79be54bc64227c42')
+
+ u=db.MongoManager.getInstance("localhost",27017)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+> db.practice.aggregate({$match:{scores:{$elemMatch:{score:{$gt:40}}}}}).pretty()
+{
+        "_id" : 1,
+        "name" : "Aurelia Menendez",
+        "scores" : [
+                {
+                        "score" : 60.06045071030959,
+                        "type" : "exam"
+                },
+                {
+                        "score" : 52.79790691903873,
+                        "type" : "quiz"
+                },
+                {
+                        "score" : 71.76133439165544,
+                        "type" : "homework"
+                }
+        ]
+}
+{
+        "_id" : 2,
+        "name" : "Corliss Zuk",
+        "scores" : [
+                {
+                        "score" : 67.03077096065002,
+                        "type" : "exam"
+                },
+                {
+                        "score" : 6.301851677835235,
+                        "type" : "quiz"
+                },
+                {
+                        "score" : 66.28344683278382,
+                        "type" : "homework"
+                }
+        ]
+}
+{
+        "_id" : 3,
+        "name" : "Bao Ziglar",
+        "scores" : [
+                {
+                        "score" : 71.64343899778332,
+                        "type" : "exam"
+                },
+                {
+                        "score" : 24.80221293650313,
+                        "type" : "quiz"
+                },
+                {
+                        "score" : 42.26147058804812,
+                        "type" : "homework"
+                }
+        ]
+}
+
+
+
+           {
+                        "score" : 71.99314840599558,
+                        "type" : "quiz"
+                },
+                {
+                        "score" : 81.23972632069464,
+                        "type" : "homework"
+                }
+        ]
+}
+Type "it" for more
+
+
+
+> db.practice.find({scores:{$elemMatch:{score:{$gt:40}}}}).pretty()
+{
+        "_id" : 1,
+        "name" : "Aurelia Menendez",
+        "scores" : [
+                {
+                        "score" : 60.06045071030959,
+                        "type" : "exam"
+                },
+                {
+                        "score" : 52.79790691903873,
+                        "type" : "quiz"
+                },
+                {
+                        "score" : 71.76133439165544,
+                        "type" : "homework"
+                }
+        ]
+}
+{
+        "_id" : 2,
+        "name" : "Corliss Zuk",
+        "scores" : [
+                {
+                        "score" : 67.03077096065002,
+                        "type" : "exam"
+                },
+                {
+                        "score" : 6.301851677835235,
+                        "type" : "quiz"
+                },
+                {
+                        "score" : 66.28344683278382,
+                        "type" : "homework"
+                }
+        ]
+}
+
+
+db.practice.find({scores:{$elemMatch:{type:"quizl"}}}).pretty()
+
+
+> db.practice.find({scores:{$size:3}}).pretty().count()
+200
+
+
+
+> db.practice.aggregate([{$unwind:"$scores"},{$group:{_id:"$name",avgscore:{$avg:"$scores.score"}}}]).pretty()
+{ "_id" : "Corliss Zuk", "avgscore" : 60.160486243805146 }
+{ "_id" : "Wilburn Spiess", "avgscore" : 57.385035475549834 }
+{ "_id" : "Laureen Salomone", "avgscore" : 41.12807397444486 }
+{ "_id" : "Margart Vitello", "avgscore" : 58.137332728667445 }
+{ "_id" : "Tandra Meadows", "avgscore" : 39.74322269842921 }
+{ "_id" : "Sanda Ryba", "avgscore" : 48.559123576515645 }
+{ "_id" : "Tambra Mercure", "avgscore" : 52.161312828659426 }====
+{ "_id" : "Synthia Labelle", "avgscore" : 46.54181670911459 }
+{ "_id" : "Grady Zemke", "avgscore" : 50.61649089056246 }
+{ "_id" : "Milan Mcgavock", "avgscore" : 34.731257136783384 }
+{ "_id" : "Salena Olmos", "avgscore" : 56.68024997827851 }
+{ "_id" : "Lady Lefevers", "avgscore" : 53.33417648955892 }
+{ "_id" : "Tania Hulett", "avgscore" : 51.769444095567145 }
+{ "_id" : "Houston Valenti", "avgscore" : 46.68073734628675 }
+{ "_id" : "Fletcher Mcconnell", "avgscore" : 61.251788914857606 }
+{ "_id" : "Tamika Schildgen", "avgscore" : 58.84251070566321 }
+{ "_id" : "Brain Lachapelle", "avgscore" : 45.02620787680845 }
+{ "_id" : "Terica Brugger", "avgscore" : 59.0258571483713 }
+{ "_id" : "Danika Loeffler", "avgscore" : 49.48602148717 }
+{ "_id" : "Kim Xu", "avgscore" : 42.508738612750705 }
+
+
+> db.practice.aggregate([{$unwind:"$scores"},{$project:{name:1,avgscore:{$avg:"$scores.score"}}}]).pretty()
+{ "_id" : 0, "name" : "aimee Zank", "avgscore" : 1.463179736705023 }
+{ "_id" : 0, "name" : "aimee Zank", "avgscore" : 11.78273309957772 }
+{ "_id" : 0, "name" : "aimee Zank", "avgscore" : 35.8740349954354 }
+{ "_id" : 1, "name" : "Aurelia Menendez", "avgscore" : 60.06045071030959 }
+{ "_id" : 1, "name" : "Aurelia Menendez", "avgscore" : 52.79790691903873 }
+{ "_id" : 1, "name" : "Aurelia Menendez", "avgscore" : 71.76133439165544 }
+
+
+
+> db.practice.aggregate({$project:{avg:{$avg:"$scores.score"}}}).pretty()
+{ "_id" : 0, "avg" : 16.373315943906046 }
+{ "_id" : 1, "avg" : 61.53989734033458 }
+{ "_id" : 2, "avg" : 46.53868982375636 }
+{ "_id" : 3, "avg" : 46.23570750744486 }
+{ "_id" : 4, "avg" : 67.79878751009093 }
+{ "_id" : 5, "avg" : 44.67289918492647 }
+{ "_id" : 6, "avg" : 49.07345251588723 }
+{ "_id" : 7, "avg" : 76.46531115915774 }
+{ "_id" : 8, "avg" : 37.57225777251449 }
+{ "_id" : 9, "avg" : 73.36109372875522 }
+{ "_id" : 10, "avg" : 66.62811909617069 }
+{ "_id" : 11, "avg" : 82.83638462303753 }
+{ "_id" : 12, "avg" : 73.4394793311116 }
+{ "_id" : 13, "avg" : 91.98315917172745 }
+{ "_id" : 14, "avg" : 39.49623450792358 }
+{ "_id" : 15, "avg" : 39.16669547058058 }
+{ "_id" : 16, "avg" : 40.045584291265214 }
+{ "_id" : 17, "avg" : 72.7479933931404 }
+{ "_id" : 18, "avg" : 76.15468092976988 }
+{ "_id" : 19, "avg" : 46.17779245857398 }
+
+
+
+
+
+
+> db.practice.aggregate({$project:{"name":1,"scores.score":1}}).pretty()
+{
+        "_id" : 0,
+        "name" : "aimee Zank",
+        "scores" : [
+                {
+                        "score" : 1.463179736705023
+                },
+                {
+                        "score" : 11.78273309957772
+                },
+                {
+                        "score" : 35.8740349954354
+                }
+        ]
+}
+
+
+
+> db.practice.aggregate({$limit:2},{$project:{"name":1,"scores.score":1}}).pretty()
+{
+        "_id" : 0,
+        "name" : "aimee Zank",
+        "scores" : [
+                {
+                        "score" : 1.463179736705023
+                },
+                {
+                        "score" : 11.78273309957772
+                },
+                {
+                        "score" : 35.8740349954354
+                }
+        ]
+}
+{
+        "_id" : 1,
+        "name" : "Aurelia Menendez",
+        "scores" : [
+                {
+                        "score" : 60.06045071030959
+                },
+                {
+                        "score" : 52.79790691903873
+                },
+                {
+                        "score" : 71.76133439165544
+                }
+        ]
+}
+
+
+
+> db.practice.aggregate([{$unwind:"$scores"},{$group:{_id:"$name",array:{$addToSet:"$scores.score"}}}]).pretty()
+{
+        "_id" : "Richelle Siemers",
+        "array" : [
+                34.64373397163318,
+                91.46799649446983,
+                52.0158789874646,
+                19.25549934746802,
+                56.12615074082559,
+                68.33217408510437
+        ]
+}
+{
+        "_id" : "Nobuko Linzey",
+        "array" : [
+                58.58331128403415,
+                47.44831568815929,
+                67.40792606687442
+        ]
+}
+{
+        "_id" : "Malisa Jeanes",
+        "array" : [
+                33.44580005842922,
+                40.68676040665008,
+                94.67979508129564,
+                80.53328849494751,
+                52.60826688242043,
+                7.172746439960975
+        ]
+}
+{
+        "_id" : "Rosana Vales",
+        "array" : [
+                36.18769746805938,
+                33.70281347493842,
+                98.34164225207036,
+                46.2289476258328,
+                62.79875994037851,
+                15.73156258820246
+        ]
+}
+{
+        "_id" : "aimee Zank",
+        "array" : [
+                18.92628947700149,
+                1.463179736705023,
+                35.8740349954354,
+                15.91636686717778,
+                11.78273309957772,
+                96.12953798826392
+        ]
+}
+{
+        "_id" : "Jaclyn Morado",
+        "array" : [
+                56.78470387064279,
+                70.27627082122453,
+                47.48518298423097
+        ]
+}
+{
+        "_id" : "Dodie Staller",
+        "array" : [
+                31.84300235104542,
+                80.52136407989194,
+                83.51563143820728,
+                7.772386442858281,
+                52.16051124848157,
+                63.88857636557489
+        ]
+}
+{
+        "_id" : "Myrtle Wolfinger",
+        "array" : [
+                35.99397009906073,
+                93.85826506506328,
+                73.93895528856032
+        ]
+}
+
+
+
+
+> db.practice.aggregate([{$group:{_id:"$name",array:{$addToSet:"$scores.score"}}}]).pretty()
+{
+        "_id" : "Malisa Jeanes",
+        "array" : [
+                [
+                        40.68676040665008,
+                        52.60826688242043,
+                        94.67979508129564
+                ],
+                [
+                        33.44580005842922,
+                        7.172746439960975,
+                        80.53328849494751
+                ]
+        ]
+}
+{
+        "_id" : "Nobuko Linzey",
+        "array" : [
+                [
+                        67.40792606687442,
+                        58.58331128403415,
+                        47.44831568815929
+                ]
+        ]
+}
+
+
+
+
+
+> db.practice.aggregate([{$addFields:{total:{$sum:"$scores.score"}}}]).pretty()
+{
+        "_id" : 0,
+        "name" : "aimee Zank",
+        "scores" : [
+                {
+                        "score" : 1.463179736705023,
+                        "type" : "exam"
+                },
+                {
+                        "score" : 11.78273309957772,
+                        "type" : "quiz"
+                },
+                {
+                        "score" : 35.8740349954354,
+                        "type" : "homework"
+                }
+        ],
+        "total" : 49.11994783171814
+}
+{
+        "_id" : 1,
+        "name" : "Aurelia Menendez",
+        "scores" : [
+                {
+                        "score" : 60.06045071030959,
+                        "type" : "exam"
+                },
+                {
+                        "score" : 52.79790691903873,
+                        "type" : "quiz"
+                },
+                {
+                        "score" : 71.76133439165544,
+                        "type" : "homework"
+                }
+        ],
+        "total" : 184.61969202100374
+}
+
+
+
+> db.practice.aggregate([{$addFields:{newarray:[]}},{$group:{_id:"$_id",newarray:{$addToSet:"$scores.score"}}}]).pretty()
+{
+        "_id" : 61,
+        "newarray" : [
+                [
+                        51.91561300267121,
+                        50.08349374829509,
+                        95.34139273570386
+                ]
+        ]
+}
+{
+        "_id" : 158,
+        "newarray" : [
+                [
+                        68.36209185504055,
+                        15.83819664395878,
+                        81.7258704821604
+                ]
+        ]
+}
+
+
+
+> db.practice.aggregate([{$unwind:"$scores"},{$addFields:{newarray:[]}},{$group:{_id:"$_id",newarray:{$addToSet:"$scores.score"}}}]).pretty()
+{
+        "_id" : 74,
+        "newarray" : [
+                93.71671632774428,
+                31.62936464207764,
+                91.28658941188532
+        ]
+}
+{
+        "_id" : 119,
+        "newarray" : [
+                52.36963021569788,
+                61.35034001494281,
+                96.5715450678789
+        ]
+}
+
+
+> db.practice.aggregate([{$unwind:"$scores"},{$group:{_id:"$_id",avg:{$avg:"$scores.score"}}},{$addFields:{"result":{"$cond":{if:{"$gt":["$avg",33]},then:"pass",else:"fail"}}}}]).pretty()
+{ "_id" : 24, "avg" : 49.70269204382694, "result" : "pass" }
+{ "_id" : 67, "avg" : 74.14512702864923, "result" : "pass" }
+{ "_id" : 124, "avg" : 39.4113738593621, "result" : "pass" }
+{ "_id" : 131, "avg" : 49.755584436574814, "result" : "pass" }
+{ "_id" : 83, "avg" : 43.706449914834, "result" : "pass" }
+{ "_id" : 94, "avg" : 51.925700759696134, "result" : "pass" }
+{ "_id" : 148, "avg" : 58.20620710811796, "result" : "pass" }
+{ "_id" : 73, "avg" : 44.06438867976778, "result" : "pass" }
+{ "_id" : 75, "avg" : 67.27528000602466, "result" : "pass" }
+{ "_id" : 87, "avg" : 30.097630688937944, "result" : "fail" }
+{ "_id" : 98, "avg" : 81.60921059372951, "result" : "pass" }
+{ "_id" : 90, "avg" : 61.8459914429823, "result" : "pass" }
+
+
+
+> db.practice.aggregate([{$unwind:"$scores"},{$group:{_id:"$_id","name":{"$first":"$name"},avg:{$avg:"$scores.score"}}},{$addFields:{"result":{"$cond":{if:{"$gt":["$avg",33]},then:"pass",else:"fail"}}}},{$project:{result:1,name:1,avg:1}}]).pretty()
+{
+        "_id" : 149,
+        "name" : "Synthia Labelle",
+        "avg" : 47.16998485788662,
+        "result" : "pass"
+}
+{
+        "_id" : 160,
+        "name" : "Lady Lefevers",
+        "avg" : 62.90411679922721,
+        "result" : "pass"
+}
+{
+        "_id" : 122,
+        "name" : "Daphne Zheng",
+        "avg" : 57.22821643707815,
+        "result" : "pass"
+}
+
+
+
+
+> db.practice.update({"scores.type":"quiz"},{$set:{"scores.$.type":"preboard"}},{multi:true})
+WriteResult({ "nMatched" : 199, "nUpserted" : 0, "nModified" : 199 })
+> db.practice.find({}).pretty()
+{
+        "_id" : 0,
+        "name" : "aimee Zank",
+        "scores" : [
+                {
+                        "score" : 1.463179736705023,
+                        "type" : "exam"
+                },
+                {
+                        "score" : 11.78273309957772,
+                        "type" : "preboard"
+                },
+                {
+                        "score" : 35.8740349954354,
+                        "type" : "homework"
+                }
+        ]
+}
+{
+
+
+
+
+
+> db.practice.update({"_id":1},{$push:{scores:{$each:[{"title":"TV"},{"title":"phone"}]}}},{multi:true})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+{
+        "_id" : 1,
+        "name" : "Aurelia Menendez",
+        "scores" : [
+                {
+                        "score" : 60.06045071030959,
+                        "type" : "exam"
+                },
+                {
+                        "score" : 52.79790691903873,
+                        "type" : "preboard"
+                },
+                {
+                        "score" : 71.76133439165544,
+                        "type" : "homework"
+                },
+                {
+                        "title" : "TV"
+                },
+                {
+                        "title" : "phone"
+                }
+        ]
+}
+
+
+
+
+> db.practice.update({"scores.title":"TV"},{$set:{"scores.$.price":400,"scores.$.quantity":1}},{multi:true})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+{
+        "_id" : 1,
+        "name" : "Aurelia Menendez",
+        "scores" : [
+                {
+                        "score" : 60.06045071030959,
+                        "type" : "exam"
+                },
+                {
+                        "score" : 52.79790691903873,
+                        "type" : "preboard"
+                },
+                {
+                        "score" : 71.76133439165544,
+                        "type" : "homework"
+                },
+                {
+                        "title" : "TV",
+                        "price" : 400,
+                        "quantity" : 1
+                },
+
+
+
+
+> db.practice.update({$and:[{"scores.title":"TV"},{"scores.price":400}]},{$set:{"scores.$.price":500,"scores.$.quantity":2}},{multi:true})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+{
+        "_id" : 1,
+        "name" : "Aurelia Menendez",
+        "scores" : [
+                {
+                        "score" : 60.06045071030959,
+                        "type" : "exam"
+                },
+                {
+                        "score" : 52.79790691903873,
+                        "type" : "preboard"
+                },
+                {
+                        "score" : 71.76133439165544,
+                        "type" : "homework"
+                },
+                {
+                        "title" : "TV",
+                        "price" : 500,
+                        "quantity" : 2
+                },
+                {
+                        "title" : "phone"
+                }
+        ]
+}
+
+
+
+> db.practice.update({scores:{$elemMatch:{"title":"TV","price":600}}},{$set:{"scores.$.price":700,"scores.$.quantity":3}},{multi:true})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+
+
+> db.practice.insert([{name:"hjnakulj"},{name:"hjl"}])
+BulkWriteResult({
+        "writeErrors" : [ ],
+        "writeConcernErrors" : [ ],
+        "nInserted" : 2,
+        "nUpserted" : 0,
+        "nMatched" : 0,
+        "nModified" : 0,
+        "nRemoved" : 0,
+        "upserted" : [ ]
+})
+
+> db.practice.insertMany([{name:"hjnakulj"},{name:"hjl"}])
+{
+        "acknowledged" : true,
+        "insertedIds" : [
+                ObjectId("6127678a5c072c03d45d5a61"),
+                ObjectId("6127678a5c072c03d45d5a62")
+        ]
+}
+
+> db.practice.insertOne({name:"hjnakul"})
+{
+        "acknowledged" : true,
+        "insertedId" : ObjectId("6127670c5c072c03d45d5a60")
+}
+
+> db.practice.update({"scores.typel":"homeworkl"},{$set:{"scores.$.type":"Homework"}},{multi:true})
+WriteResult({ "nMatched" : 0, "nUpserted" : 0, "nModified" : 0 })
+
+> db.practice.update({"scores.type":"Homework"},{$se:{"scores.$.type":"homework"}})
+WriteResult({
+        "nMatched" : 0,
+        "nUpserted" : 0,
+        "nModified" : 0,
+        "writeError" : {
+                "code" : 9,
+                "errmsg" : "Unknown modifier: $se. Expected a valid update modifier or pipeline-style update specified as an array"
+        }
+})
